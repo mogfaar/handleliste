@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Varene og forslagshistorikken i én liste. Man må kjenne den lange
+    // koden i lenken for å komme inn. Det finnes ingen regel for selve
+    // «lister»-samlingen, så ingen kan hente ut en oversikt over alle lister.
+    match /lister/{listeId}/varer/{vare} {
+      allow read, write: if listeId.size() >= 20;
+    }
+    match /lister/{listeId}/historikk/{ord} {
+      allow read, write: if listeId.size() >= 20;
+    }
+  }
+}
